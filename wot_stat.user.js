@@ -33,7 +33,7 @@ function main(lang)
 	var timeDiv = document.getElementsByClassName("b-data-date")[0];
 	var timeStamp = new Date(Number(timeDiv.childNodes[1].getAttribute("data-timestamp")) * 1000);
 	timeDiv.innerHTML += "<p/>" + (lang == "ru" ? "версия <a href='http://forum.worldoftanks.ru/index.php?/topic/145058-'>скрипта</a> " : " <a href='http://userscripts.org/scripts/show/110489'>script</a> version ")
-	+ "0.7.5.2 <p/> <font onclick='WriteStat();' style='cursor:pointer; color:white; text-decoration:underline'>" + ((lang == "ru") ? "Сохранить текущую стату" : "Save statistic") + "</font>";
+	+ "0.7.5.2.1 <p/> <font onclick='WriteStat();' style='cursor:pointer; color:white; text-decoration:underline'>" + ((lang == "ru") ? "Сохранить текущую стату" : "Save statistic") + "</font>";
 
 	var dayArray = [];
 	var old_b =0;
@@ -67,7 +67,7 @@ function main(lang)
 //	   	var needWrite = true;
 			var tres = document.getElementsByClassName("t-table-dotted")[0];
 			if (tres.innerHTML.indexOf("currency-gold")>0)
-			for (var i = 0; i < 3 ; i++)
+			for (var i = 0; i < 3; i++)
 			{
 				var diff = toFl(tres.rows[i].cells[1].innerHTML) - Number(str[i+1]);
 				if (diff)
@@ -81,7 +81,7 @@ function main(lang)
 			{		
 				var tres = document.getElementsByClassName("t-statistic")[0];
 				j = 1;
-				for (var i = 4; i < str.length-1 ; i++)
+				for (var i = 4; i < str.length - 1; i++)
 				{
 					var diff = toFl(tres.rows[j].cells[3].innerHTML) - Number(str[i]);	
 					if (diff)
@@ -179,7 +179,7 @@ function main(lang)
 	{	
 		document.getElementsByClassName("l-content")[0].style.width = "786px";
 		document.getElementsByClassName("l-sidebar")[0].style.width = "144px"; 
-	        document.getElementsByClassName("b-context-menu")[0].style.width = "144px";
+	    document.getElementsByClassName("b-context-menu")[0].style.width = "144px";
 	} catch (e) 
 //	if (1==2)
 	{	                                     
@@ -263,7 +263,7 @@ function main(lang)
 			var MedalImg = ["",	"top_gun",	"invader",	"sniper",	"defender",	"steel_wall",	"confederate",	"scout",	"medal_belter",	"orlik",	"oskin",	"halonen",	"burda",	"billotte",	"kolobanov",	"heroesofrassenay",	"fadin",	"",	"tank_hunter",	"lionofsinai",	"mouse_trap",	"expert",	"master_gunner",	"",	"",	"",	"",	"sharpshooter",	"invincible",	"survivor",	"raider",	"reaper",	"kamikadze",	"",	"",	""]								
 			var MedalTitle = ["",	"Воин",	"Захватчик",	"Снайпер",	"Защитник",	"Стальная стена",	"Поддержка",	"Разведчик",	"Бёльтер",	"Орлик",	"Оськин",	"Халонен",	"Бурда",	"Бийот",	"Колобанов",	"Расейняя",	"Фадин",	"",	"Зверобой",	"Лев Синая",	"Гроза мышей",	"Эксперт",	"Бронебойщик",	"",	"",	"",	"",	"Стрелок",	"Неуязвимый",	"Живучий",	"Рейдер",	"Коса смерти",	"Камикадзе",	"",	"",	""]
 
-			for (var i=0; i<MedalImg.length; i++)
+			for (var i = 0; i < MedalImg.length; i++)
 			{
 				mImg = MedalImg[i];
 				if (mImg !=""&& mImg.substr(0,1)!="!")
@@ -299,7 +299,7 @@ function main(lang)
 			nc.innerHTML = '<div onclick="sortTd(this, &quot;u&quot;)" style="cursor: pointer">frags</div>';
 
 			vehs = resp.data.vehicles;
-			for (var i =1; i<rows.length; i++)	
+			for (var i = 1; i < rows.length; i++)
 			{
 				var t = rows[i].cells;
 				if (t[1].tagName != "TH" && t[1].innerHTML!="")
@@ -325,9 +325,16 @@ function main(lang)
 	};                                                                               
 	req.open("GET", url, true);
 	req.setRequestHeader("If-Modified-Since", "Sat, 1 Jan 2000 00:00:00 GMT");
+	//req.open("POST", "http://safeweber.ru/index.php", true);
+	//req.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
 	try 
 	{
 		if (needMedal == 1) req.send(null);
+		//if (needMedal == 1)
+		//{	
+			//req.send("q="+url);
+			//alert(req.getResponseHeader("Connection")); ??
+		//}
 	} catch (e){}
 
 
@@ -435,7 +442,7 @@ th.innerHTML = th.innerHTML.replace('<select>','<select name="type" onchange = "
 trth.insertBefore(th, trth.cells[0]);
 
 	var yd = document.getElementsByTagName('td');
-	for (i=0; i<yd.length; i++) 	
+	for (i = 0; i < yd.length; i++)
 	{	
 		if( yd[i].className.indexOf("td-armory-icon")>1)
 		{  
@@ -833,10 +840,10 @@ function col(v,digit)
 {
 	if(isNaN(v)) return "x";
 	var color = "90ffff";        //больше 60, ярко-белый
-	if (v<60) color="90ff90"    // от 60 до 56, тусклозеленый
-	if (v<56) color="babfba"    //дефолтный серенький
-	if (v<50) color="ffff90"    //желтоватый
-	if (v<46) color="ff9090"    //красный
+	if (v<60) color="90ff90"     //от 60 до 56, тусклозеленый
+	if (v<56) color="babfba"     //дефолтный серенький
+	if (v<50) color="ffff90"     //желтоватый
+	if (v<46) color="ff9090"     //красный
 
 	return "<font color='"+color+"'>"+v.toFixed(digit)+"</font>";
 }
@@ -845,10 +852,10 @@ function col2(v)
 {
 	if (isNaN(v)) v = 0;
 	var color = "90ffff";        //больше 60, ярко-белый
-	if (v<10) color="90ff90"    // от 60 до 56, тусклозеленый
-	if (v<5) color="babfba"    //дефолтный серенький
-	if (v<0) color="ffff90"    //желтоватый
-	if (v<-5) color="ff9090"    //красный
+	if (v<10) color="90ff90"     //от 60 до 56, тусклозеленый
+	if (v<5) color="babfba"      //дефолтный серенький
+	if (v<0) color="ffff90"      //желтоватый
+	if (v<-5) color="ff9090"     //красный
 	v = v.toFixed(2);
 	if (v>=0) v = "+"+v;
 	return "<font color='"+color+"'>"+v+"</font>";
@@ -882,16 +889,17 @@ function sortTd(el,dir)
 	{
 		sortar.sort(_sort);
 		el.setAttribute('onclick','sortTd(this, "d")');
-	} else
+	} 
+	else
 	{
 		sortar.sort(_sortR);
 		el.setAttribute('onclick','sortTd(this, "u")');
 	}
 	tBody.innerHTML = "";
 	tBody.appendChild(th);
-    for (var i=0;i<sortar.length -1 ;i++)
+    for (var i = 0; i < sortar.length - 1; i++)
     {
-        tBody.appendChild(sortar[i][1]);
+    	tBody.appendChild(sortar[i][1]);
     }
 
 function defkey(row,i)
@@ -951,7 +959,7 @@ function hideTypes(el)
 		if ((rows[i].cells[0].innerHTML == ftype || ftype == 0) &&
 			(nat == 0 || rows[i].cells[1].getAttribute("nat") == nat) &&
 			(!onlyNew||rows[i].cells[2].innerHTML.indexOf("%")>0) &&
-			(toFl(rows[i].cells[3].innerHTML)>chfrom && (toFl(rows[i].cells[3].innerHTML)<chto || chto==0 ) )
+			(toFl(rows[i].cells[3].innerHTML)>chfrom && (toFl(rows[i].cells[3].innerHTML)<chto || chto==0 ))
 		   )
 		{
 			rows[i].style.display = "";
@@ -1010,41 +1018,41 @@ function WriteStat()
 	var cookie = ""+timeStamp+";"; 
 	var tres = document.getElementsByClassName("t-table-dotted")[0];
 	
-	for (var i =0; i<3; i++)	
-		if (tres.innerHTML.indexOf("currency-gold")>0)
+	for (var i = 0; i < 3; i++)
+		if (tres.innerHTML.indexOf("currency-gold") > 0)
 		{
-            var resText = tres.rows[i].cells[1].innerHTML;
-			resText = resText.substr(resText.indexOf("span")+4);
-			cookie+=""+toFl(resText.substr(0, resText.indexOf("span"))) + ";";
+			var resText = tres.rows[i].cells[1].innerHTML;
+			resText = resText.substr(resText.indexOf("span") + 4);
+			cookie += "" + toFl(resText.substr(0, resText.indexOf("span"))) + ";";
 		}
-	    else
+		else
 		{
-			cookie+="NaN;";
+			cookie += "NaN;";
 		}
 		
-    var rows = document.getElementsByClassName("t-statistic")[0].rows; 
-	
-	for (var i =1; i<rows.length; i++)	
-	{
-        var resText = rows[i].cells[3].innerHTML;
-		resText = resText.indexOf("span") > 0 ? resText.substr(0,resText.indexOf("span")) : resText;
-		cookie +=""+ toFl(resText)+";";
-        var r = rows[i].cells[4].getElementsByTagName("a")[0];
-		resText = r == undefined ? rows[i].cells[4].innerHTML: r.innerHTML ;
-		resText = resText.indexOf("span") > 0 ? resText.substr(0,resText.indexOf("span")) : resText;
-		cookie +=""+ toFl(resText)+";";
-	}
+    var rows = document.getElementsByClassName("t-statistic")[0].rows;
+    
+    for (var i = 1; i < rows.length; i++)
+    {
+    	var resText = rows[i].cells[3].innerHTML;
+    	resText = resText.indexOf("span") > 0 ? resText.substr(0, resText.indexOf("span")) : resText;
+    	cookie += "" + toFl(resText) + ";";
+    	var r = rows[i].cells[4].getElementsByTagName("a")[0];
+    	resText = r == undefined ? rows[i].cells[4].innerHTML : r.innerHTML;
+    	resText = resText.indexOf("span") > 0 ? resText.substr(0, resText.indexOf("span")) : resText;
+    	cookie += "" + toFl(resText) + ";";
+    }
 		
     var rows = document.getElementsByClassName("t-statistic")[1].rows;
-    for (var i=1; i<rows.length ;i++)
-	{
-		var t = rows[i].cells;
-		if (t[1].tagName != "TH" && t[1].innerHTML!="")
-		{
-			imgName = t[1].getElementsByTagName('img')[0].src.match(/\/[^-]+-([^\/]*)\.png/)[1];
-			cookie += "/"+imgName+";"+toFl(t[3].innerHTML)+";"+toFl(t[4].innerHTML);
-		}
-	}
+    for (var i = 1; i < rows.length; i++)
+    {
+    	var t = rows[i].cells;
+    	if (t[1].tagName != "TH" && t[1].innerHTML != "")
+    	{
+    		imgName = t[1].getElementsByTagName('img')[0].src.match(/\/[^-]+-([^\/]*)\.png/)[1];
+    		cookie += "/" + imgName + ";" + toFl(t[3].innerHTML) + ";" + toFl(t[4].innerHTML);
+    	}
+    }
 
 	document.cookie = "daystat" +"=" + escape(cookie)+"; expires=Mon, 01-Jan-2031 00:00:00 GMT";  
 	alert("Saved");
