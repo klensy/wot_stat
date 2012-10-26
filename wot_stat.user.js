@@ -150,7 +150,7 @@ function main(lang)
 						j++;
 					}
 				}
-				for (var i =1; i<strArray.length; i++)
+				for (var i = 1; i < strArray.length; i++)
 				{
 					str = strArray[i].split(";")
 					tName = str[0].toLowerCase()
@@ -257,17 +257,17 @@ function main(lang)
 				for (var i = 0; i < MedalImg.length; i++)
 				{
 					mImg = MedalImg[i];
-					if (mImg !=""&& mImg.substr(0,1)!="!")
+					if (mImg != "" && mImg.substr(0, 1) != "!")
 					{
 						styleImg = ""
 						mc = arMedal[MedalName[i]]
 						if (mc>0)
 						{
-							title = (lang == "ru") ?MedalTitle[i]: mImg ;
+							title = (lang == "ru") ? MedalTitle[i] : mImg;
 							if (MedalName[i] == "maxInvincibleSeries" && mc <5) styleImg ="style = 'opacity: 0.4;' " 							
 							if (MedalName[i] == "maxDiehardSeries" && mc <20) styleImg ="style = 'opacity: 0.4;' " 							
 							if (MedalName[i].indexOf("max")<0)
-								title+=(lang=="ru"?". Раз в ":". once on ")+(all_b/mc).toFixed(1);
+								title += (lang == "ru" ? ". Раз в " : ". once on ") + (all_b / mc).toFixed(1);
 							else
 								title+=(lang=="ru"?". Максимальная длина серии":". Max series length ")	
 							div.innerHTML += "<div style='display: inline-block;position: relative;'><img "+styleImg+"width=50 height=50 src='http://worldoftanks.ru/dcont/fb/achievements/"+mImg+".png' alt='"+title+"' title='"+title+"'>"
@@ -356,8 +356,6 @@ function main(lang)
 
 	var medP = [52.13, 50.49, 50.44, 49.36, 51.14, 51.83, 52.62, 49.39, 48.61, 51.88, 51.76, 56.59, 50.97, 54.22, 54.15, 48.56, 54.83, 48.79, 50.95, 45.27, 54.53, 52.8, 47.03, 46.47, 49.29, 50.17, 56.06, 48.21, 53.33, 54.18, 54.17, 49.88, 50.46, 49.28, 48.51, 49.6, 52.71, 49.56, 49.35, 52.63, 49.26, 50.66, 49.47, 52.39, 50.89, 49.53, 49.96, 48.43, 49.46, 48.77, 49.42, 51.5, 51.65, 48.74, 49.43, 50.09, 49.08, 47.75, 53.46, 51.09, 51.79, 50.71, 48.72, 49.03, 48.43, 55.4, 53.03, 48.67, 49.71, 48.64, 48.39, 47.78, 49.49, 56.14, 51.36, 50.15, 51.32, 46.84, 49.18, 48.08, 49.19, 48.1, 48.01, 53.56, 50.61, 50.84, 52.14, 50.1, 48.93, 50.3, 50.88, 48.96, 47.38, 47.67, 0, 49.93, 47.7, 49.46, 51.39, 50.04, 48.98, 54.19, 54, 53.11, 47.95, 49.48, 50.86, 47.49, 50.05, 50.6, 49.71, 52.26, 55.98, 48.65, 51.58, 50.33, 49.18, 46.77, 48.51, 47.35, 47.72, 49.83, 51.68, 45.83, 48.62, 46.79, 52.3, 55.28, 52.34, 51.39, 54.48, 47.44, 51.93, 0, 52.17, 50.72, 50.05, 49.2, 49.03, 49.61, 51.65, 50.09, 49.7, 50.63, 49.71, 49.66, 50.85, 48.74, 49.67, 47.23, 47.54, 50.07, 52.01, 47.77, 50.87, 52.36, 47.07, 55.2, 50.18, 48.47, 47.15, 46.97, 47.72, 47.64, 46.79, 49.22, 48.07, 49.2, 0, 48.82, 48.96, 46.93, 48.41, 48.23, 53.68, 47.21, 46.92, 46.22, 49.65, 49.51, 48.9, 51.08, 51.06, 48.55, 45.37, 50.45, 48.57, 50.53, 47.16, 49.94, 48.5, 49.09, 49.29, 49.85, 49.14, 55.63, 47.15, 47.66, 48.11, 49.06, 49.56, 50.19, 48.16, 50.74, 52.94, 49.59];
 	var unrealDate = " - 02.08.12 (special thanks to fbmk)"
-
-
 
 	var levOrder = ["X","IX","VIII","VII","VI","V","IV","III","II","I"];
 		var all_b = 0;
@@ -487,7 +485,6 @@ function main(lang)
 	//	
 				}
 
-
 				levN = yd[i].getElementsByTagName('span')[0].innerHTML.replace(/<[^<]*>/g,"").replace(/\s/g,"");
 				if (lev[levN]==undefined)
 				{
@@ -539,8 +536,6 @@ function main(lang)
 						tt[tankType].n[j].b = 0;
 						tt[tankType].n[j].w = 0;
 					}
-
-
 				}
 				tt[tankType].b += b;
 				tt[tankType].w += w;
@@ -565,7 +560,6 @@ function main(lang)
 					addTd(trTankTable, "<font>x</font>", "right value");	
 				else
 					addTd(trTankTable, col2(a-med), "right value", med);
-
 				
 				var t = [];
 				t[0] = trTankTable;
@@ -596,7 +590,6 @@ function main(lang)
 					yd[i+1].innerHTML += " <span style='font-size:11px;'>("+ (w-oldStat.w) + "/" + (b-oldStat.b) + "/"+col((w-oldStat.w)/(b-oldStat.b)*100)+"%/"+col2((w/b - oldStat.w/oldStat.b)*100) +")</span>";   	
 	//
 				}
-
 			} 
 		}
 
@@ -642,7 +635,7 @@ function main(lang)
 		currProc = (all_w-old_w)/(all_b-old_b)*100;
 		if (currProc < nextD)
 			nextD--;
-		if (currProc!=nextD)
+		if (currProc != nextD)
 		{
 			need_b = ((nextD*all_b-all_w*100)/(currProc - nextD)).toFixed();
 			if (need_b>0)
@@ -665,6 +658,7 @@ function main(lang)
 	proc_country (chin_b, (lang == "ru")?" Боев на китайцах:" :"Battles on China:", chin_w);
 	proc_country (fr_b, (lang == "ru")?" Боев на французах:" :"Battles on France:", fr_w);
 	proc_country (uk_b, (lang == "ru")?" Боев на бритах:" :"Battles on UK:", uk_w);
+	
 	if(daypassed!=0)insertNewTr(NatParent,(lang == "ru")?" Боев в день:" :"Battles per day:", ""+(all_b/daypassed).toFixed(0)+"" , ((lang == "ru")?"дней" : "days")+": "+daypassed.toFixed() );
 
 	var Table = document.createElement("table");
@@ -678,19 +672,19 @@ function main(lang)
 	trLev =insertNewTr(trTankTable,(lang == "ru")?" <u>Бои по уровням</u>":"<u>battles by level:</u>",(lang == "ru")?"Бои":"Battles", "");
 	addTd(trLev,(lang == "ru")?"Победы":"Victories","right");
 	addTd(trLev,"%","right");
-	for(var j = 1;j<6;j++)
+	for (var j = 1; j < 6; j++)
 	{
 		addTd(trLev, toType("t"+j),"right");
 	}
 	var ml = 0;
-	for(var i = 0; i< levOrder.length; i++)
+	for (var i = 0; i < levOrder.length; i++)
 	{
 		key = levOrder[i];
 		if(lev[key]!=undefined)
 			{
 				ml += (10-i)*lev[key].b/all_b;
 				levTr = insertTank(trTankTable,key, lev[key].b, lev[key].w, "lev" ,(lev[key].b/all_b*100).toFixed(2)+"%");
-				for(var j = 1;j<6;j++)
+				for (var j = 1; j < 6; j++)
 					{
 						b = lev[key].t[j].b;
 						w = lev[key].t[j].w;
@@ -718,8 +712,7 @@ function main(lang)
 	}
 	ttOr.sort(function (a1,a2)
 		{
-		if(a1.b < a2.b) return 1;
-		else return -1;
+			return (a1.b < a2.b) ? 1 : -1;
 		}
 		)
 
@@ -755,7 +748,7 @@ function main(lang)
 		var tdNew = document.createElement('td');
 		tdNew.innerHTML = val;
 		tdNew.className = cl;
-		if(alt==undefined) alt = "";
+		if (alt == undefined) alt = "";
 		tdNew.title = alt;
 		tdNew.value = val;
 		tr.appendChild(tdNew);
