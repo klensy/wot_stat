@@ -1,5 +1,5 @@
 ﻿// ==UserScript==
-// @author vkv
+// @author klensy
 // @name WoTStats_test
 // @version 0.8.1
 // @description Adds some usable fields for MMO game World of Tanks user's page 
@@ -20,7 +20,7 @@
 // @include http://worldoftanks.eu/uc/accounts/*
 // @include http://worldoftanks.eu/community/accounts/*
 // ==/UserScript==
-// @vkv
+// @klensy
 var req;
 var arMedal;
 if(document.title.indexOf("Профиль игрока")>-1)
@@ -32,7 +32,7 @@ function main(lang)
 		var daypassed = (new Date() - new Date(document.getElementsByClassName("b-data-create")[0].childNodes[1].getAttribute("data-timestamp") * 1000)) / 1000 / 60 / 60 / 24;
 		var timeDiv = document.getElementsByClassName("b-data-date")[0];
 		var timeStamp = new Date(Number(timeDiv.childNodes[1].getAttribute("data-timestamp")) * 1000);
-		timeDiv.innerHTML += "<p/>" + (lang == "ru" ? "версия <a href='http://forum.worldoftanks.ru/index.php?/topic/145058-'>скрипта</a> " : " <a href='http://userscripts.org/scripts/show/110489'>script</a> version ")
+		timeDiv.innerHTML += "<p/>" + (lang == "ru" ? "версия <a href='http://forum.worldoftanks.ru/index.php?/topic/566557-'>скрипта</a> " : " <a href='http://forum.worldoftanks.ru/index.php?/topic/566557-'>script</a> version ")
 		+ "0.8.1 <p/> <font onclick='WriteStat();' style='cursor:pointer; color:white; text-decoration:underline'>" + ((lang == "ru") ? "Сохранить текущую стату" : "Save statistic") + "</font>";
 
 		var dayArray = [];
@@ -113,29 +113,33 @@ function main(lang)
 							{
 								var r = tableDin.insertRow(-1);
 								var c = r.insertCell(-1);
-								if (j == 11 )
+								switch (j) // switched to switch, klensy
 								{
-									c.innerHTML = ((lang == "ru") ? "Опыт за бой":"exp per battle");
-									var c = r.insertCell(-1);
-									c.innerHTML = (diff/newBatles).toFixed();
-								}
-								else if (j == 7 )
-								{
-									c.innerHTML = ((lang == "ru") ? "Повреждения за бой":"Damage per battle");;
-									var c = r.insertCell(-1);
-									c.innerHTML = (diff/newBatles).toFixed();
-								}
-								else if (j == 9 )
-								{
-									c.innerHTML = ((lang == "ru") ? "Фрагов за бой":"Frags per battle");
-									var c = r.insertCell(-1);
-									c.innerHTML = (diff/newBatles).toFixed(2);
-								}
-								else if (j == 10 )
-								{
-									c.innerHTML = ((lang == "ru") ? "Обнаружено за бой":"spotted per battle");
-									var c = r.insertCell(-1);
-									c.innerHTML = (diff/newBatles).toFixed(2);
+									case 11:
+										c.innerHTML = ((lang == "ru") ? "Опыт за бой":"exp per battle");
+										var c = r.insertCell(-1);
+										c.innerHTML = (diff/newBatles).toFixed();
+										break
+									
+									case 7: 
+										c.innerHTML = ((lang == "ru") ? "Повреждения за бой":"Damage per battle");;
+										var c = r.insertCell(-1);
+										c.innerHTML = (diff/newBatles).toFixed();
+										break
+										
+									case 9:
+										c.innerHTML = ((lang == "ru") ? "Фрагов за бой":"Frags per battle");
+										var c = r.insertCell(-1);
+										c.innerHTML = (diff/newBatles).toFixed(2);
+										break
+									case 10:
+										c.innerHTML = ((lang == "ru") ? "Обнаружено за бой":"spotted per battle");
+										var c = r.insertCell(-1);
+										c.innerHTML = (diff/newBatles).toFixed(2);
+										break
+									
+									//default: alert ("error")
+									
 								}
 								c.className = "td-number";
 							}
@@ -145,8 +149,8 @@ function main(lang)
 						resText = r == undefined ? tres.rows[j].cells[4].innerHTML: r.innerHTML ;
 
 						var diff = toFl(resText) - Number(str[i]);	
-						if (diff)
-							tres.rows[j].cells[4].innerHTML+="<span style='font-size:11px;'>/"+((diff>0)?"<font color=red>v</font>"+diff:"<font color=green>^</font>"+(-diff))+"</span>";	
+						if (diff) // reversed '^' and 'v' by colors, klensy
+							tres.rows[j].cells[4].innerHTML+="<span style='font-size:11px;'>/"+((diff>0)?"<font color=red>^</font>"+diff:"<font color=green>v</font>"+(-diff))+"</span>";	
 						j++;
 					}
 				}
@@ -181,46 +185,54 @@ function main(lang)
 	//	document.getElementsByClassName("l-sidebar")[0].style = "width: 144px;";
 
 
-	   var script = document.createElement("script");  
+	   /*var script = document.createElement("script");  //
 	   script.type = "text/javascript";		
 	   script.textContent =  sortTd.toString();
-	   document.body.appendChild(script);
+	   document.body.appendChild(script);*/
+	   setup_script (sortTd);
 
-	   var script = document.createElement("script");  
+	   /*var script = document.createElement("script");  
 	   script.type = "text/javascript";		
 	   script.textContent =  toType.toString();
-	   document.body.appendChild(script);
+	   document.body.appendChild(script);*/
+	   setup_script (toType);
 
 
-	   var script = document.createElement("script");  
+	   /*var script = document.createElement("script");  
 	   script.type = "text/javascript";		
 	   script.textContent =  WriteStat.toString();
-	   document.body.appendChild(script);
+	   document.body.appendChild(script);*/
+	   setup_script (WriteStat);
 
-	   var script = document.createElement("script");  
+	   /*var script = document.createElement("script");  
 	   script.type = "text/javascript";		
 	   script.textContent =  hideTypes.toString();
-	   document.body.appendChild(script);
-
-	   var script = document.createElement("script");  
+	   document.body.appendChild(script);*/
+	   setup_script (hideTypes);
+	
+	   /*var script = document.createElement("script");  
 	   script.type = "text/javascript";		
 	   script.textContent =  toFl.toString();
-	   document.body.appendChild(script);
+	   document.body.appendChild(script);*/
+	   setup_script (toFl);
 
-	   var script = document.createElement("script");  
+	   /*var script = document.createElement("script");  
 	   script.type = "text/javascript";		
 	   script.textContent =  col.toString();
-	   document.body.appendChild(script);
+	   document.body.appendChild(script);*/
+	   setup_script (col);
 
-	   var script = document.createElement("script");  
+	   /*var script = document.createElement("script");  
 	   script.type = "text/javascript";		
 	   script.textContent =  col2.toString();
-	   document.body.appendChild(script);
+	   document.body.appendChild(script);*/
+	   setup_script (col2);
 
-	   var script = document.createElement("script");  
+	   /*var script = document.createElement("script");  
 	   script.type = "text/javascript";		
 	   script.textContent =  setCookie.toString();
-	   document.body.appendChild(script);
+	   document.body.appendChild(script);*/
+	   setup_script (setCookie);
 							  
 	  var needMedal = getCookie("medal");
 	  if (localStorage.Medal == 1)
@@ -266,8 +278,8 @@ function main(lang)
 							title = (lang == "ru") ? MedalTitle[i] : mImg;
 							if (MedalName[i] != "medalPascucci" && MedalName[i] != "medalBrunoPietro" && MedalName[i] != "evileye" && MedalName[i] != "medalTamadaYoshio" && MedalName[i] != "bombardier" && MedalName[i] != "medalBrothersInArms" && MedalName[i] != "medalTarczay" && MedalName[i] != "medalCrucialContribution" && MedalName[i] != "medalDeLanglade" && MedalName[i] != "medalRadleyWalters" && MedalName[i] != "medalNikolas" && MedalName[i] != "medalLehvaslaiho" && MedalName[i] != "medalDumitru") // TODO: all medals
 							{
-								if (MedalName[i] == "maxInvincibleSeries" && mc <5) styleImg ="style = 'opacity: 0.4;' " 							
-								if (MedalName[i] == "maxDiehardSeries" && mc <20) styleImg ="style = 'opacity: 0.4;' " 							
+								if (MedalName[i] == "maxInvincibleSeries" && mc < 5 ) styleImg = "style = 'opacity: 0.4;' "
+								if (MedalName[i] == "maxDiehardSeries"    && mc < 20) styleImg = "style = 'opacity: 0.4;' "
 								if (MedalName[i].indexOf("max")<0)
 									title += (lang == "ru" ? ". Раз в " : ". once on ") + (all_b / mc).toFixed(1);
 								else
@@ -343,17 +355,17 @@ function main(lang)
 	atype[2] = //'mt', 0.8.1 added gb01_medium_mark_i, gb05_vickers_medium_mk_ii, gb06_vickers_medium_mk_iii, gb07_matilda, gb68_matilda_black_prince, gb21_cromwell, gb22_comet, gb23_centurion, gb24_centurion_mk3
 	['t-25', 'd2', 'bat_chatillon25t', 'lorraine40t', 'sherman_jumbo', 'ch01_type59', 's35_captured', 'pzv_pziv', 'pzv_pziv_ausf_alfa', 'mtls-1g14', 'm4a2e4', 'ram-ii', 'matilda_ii_ll', 'gb68_matilda_black_prince', 't2_med', 'm2_med', 't-28', 'pziii', 'm3_grant', 't-34', 'pziv', 'pziii_iv', 'm4_sherman', 'm7_med', 't-34-85', 'vk3601h', 'vk3001h', 'vk3001p', 'm4a3e8_sherman', 'pziv_schmalturm', 'panther_m10', 't26_e4_superpershing', 't-43', 'kv-13', 'vk3002db', 'pzv', 't20', 't-44', 'panther_ii', 't23', 'pershing', 'm48a1', 't-54', 't62a', 'e-50', 'e50_ausf_m', 'pziv_hydro', 't23', 'm46_patton', 'gb01_medium_mark_i', 'gb05_vickers_medium_mk_ii', 'gb06_vickers_medium_mk_iii', 'gb07_matilda', 'gb68_matilda_black_prince', 'gb21_cromwell', 'gb22_comet', 'gb23_centurion', 'gb24_centurion_mk3']
 
-	atype[3] = //'ht', 0.8.1 added gb08_churchill_i, gb09_churchill_vii, gb10_black_prince, gb11_caernarvon, gb12_conqueror, gb13_fv215b
+	atype[3] = //'ht', 0.8.1 added gb08_churchill_i, gb09_churchill_vii, gb10_black_prince, gb11_caernarvon, gb12_conqueror, gb13_fv215b, added ST gb63_tog_ii
 	['b1', 'bdr_g1b', 'arl_44', 'amx_m4_1945', 'amx_50_100', 'amx_50_120', 'f10_amx_50b', 'lowe', 'kv-220_action', 'kv-220', 'kv-5', 'b-1bis_captured', 'churchill_ll', 't14', 'm6a2e1', 'kv', 'kv1', 'kv2', 'kv4', 'is8', 'object252', 'st_i', 't150', 't1_hvy', 'kv-3', 'kv-1s', 'm6', 'is', 'pzvi', 'pzvi_tiger_p', 't29', 'is-3', 'pzvib_tiger_ii', 'vk4502a', 't32', 'is-4', 'vk4502p', 'e-75', 't34_hvy', 'm103', 't110', 'is-7', 'maus', 'e-100', 'gb08_churchill_i', 'gb09_churchill_vii', 'gb10_black_prince', 'gb11_caernarvon', 'gb12_conqueror', 'gb13_fv215b']
 
 	atype[4] = //'sp',
 	['su-18', 'bison_i', 't57', '_105_lefh18b2', 'su-26', 'wespe', 'sturmpanzer_ii', 'm37', 'su-5', 'grille', 'm7_priest', 'su-8', 'hummel', 'm41', 'su-14', 's-51', 'g_panther', 'm12', 'object_212', 'g_tiger', 'm40m43', 'object_261', 'g_e', 'renaultbs', 'lorraine39_l_am', 'amx_105am', 'amx_13f3am', 'bat_chatillon155', 'lorraine155_50', 'lorraine155_51', 't92']
 
-	atype[5] = //at , added su100m1, su-101, su122_54, object263, su122_44
+	atype[5] = //at , added su100m1, su-101, su122_54, object263, su122_44, added SP gb71_at_15a, fcm_50t
 	['at-1', 'panzerjager_i', 't18', 'su-76', 'g20_marder_ii', 't82', 'fcm_36pak40', 'm8a1', 't49', 'gaz-74b', 'hetzer', 't40', 'su-85', 'su_85i', 'stugiii', 'm10_wolverine', 'su-100', 'su-101', 'su100m1', 'su122_54', 'object263', 'su122_44', 'jagdpziv', 'm36_slagger', 'm18_hellcat', 'su-152', 'jagdpanther', 'jagdpantherii', 't25_at', 't25_2', 'isu-152', 'ferdinand', 't28', 't28_prototype', 'object_704', 'object268', 'jagdtiger', 'jagdtiger_sdkfz_185', 't95', 'dickermax', 'jagdpz_e100', 't110e4', 't110e3', 'amx_50fosh_155', 'renaultft_ac', 'renaultue57', 'somua_sau_40', 's_35ca', 'arl_v39', 'amx_ac_mle1946', 'amx_ac_mle1948', 'amx50_foch', 't30']
 
-	prem = //added su122_44, panther_m10, pziv_schmalturm
-	['tetrarch_ll', 'm3_stuart_ll', 'bt-sv', 't-127', 'valentine_ll', 'a-32', 'churchill_ll', 'matilda_ii_ll', 'gb68_matilda_black_prince', 'kv-220_action', 'kv-220', 'kv-5', 'object252', 't26_e4_superpershing', 'jagdtiger_sdkfz_185', 't34_hvy', 'h39_captured', 'pzii_j', 's35_captured', 't-15', 'b-1bis_captured', 't-25', 'pzv_pziv', 'pzv_pziv_ausf_alfa', 'lowe', 't2_lt', 'mtls-1g14', 'm22_locust', 'm4a2e4', 'ram-ii', 't14', 'm6a2e1', 'su_85i', 'pziv_hydro', '_105_lefh18b2', 'fcm_36pak40', 'dickermax', 'ch02_type62', 'ch01_type59', 'su122_44', 'panther_m10', 'pziv_schmalturm']
+	prem = // 0.8.1 added gb63_tog_ii, gb71_at_15a, fcm_50t
+	['tetrarch_ll', 'm3_stuart_ll', 'bt-sv', 't-127', 'valentine_ll', 'a-32', 'churchill_ll', 'matilda_ii_ll', 'gb68_matilda_black_prince', 'kv-220_action', 'kv-220', 'kv-5', 'object252', 't26_e4_superpershing', 'jagdtiger_sdkfz_185', 't34_hvy', 'h39_captured', 'pzii_j', 's35_captured', 't-15', 'b-1bis_captured', 't-25', 'pzv_pziv', 'pzv_pziv_ausf_alfa', 'lowe', 't2_lt', 'mtls-1g14', 'm22_locust', 'm4a2e4', 'ram-ii', 't14', 'm6a2e1', 'su_85i', 'pziv_hydro', '_105_lefh18b2', 'fcm_36pak40', 'dickermax', 'ch02_type62', 'ch01_type59', 'su122_44', 'panther_m10', 'pziv_schmalturm', 'gb63_tog_ii', 'gb71_at_15a', 'fcm_50t']
 
 	//http://dl.dropbox.com/u/2984537/wot/stats/json
 
@@ -530,7 +542,7 @@ function main(lang)
 					yd[i+1].innerHTML =yd[i+1].innerHTML.replace('a class="b-gray-link" href', "a style='color:#"+(prem.indexOf(imgName)>=0?"ffc363":"babfba")+"' href")
 
 				tankType = "t"+ttN;
-				if (tt[tankType]==undefined)
+				if (tt[tankType] == undefined)
 				{
 					tt[tankType] = new Object();
 					tt[tankType].b = 0;
@@ -660,10 +672,10 @@ function main(lang)
 
 	proc_country (ussr_b, (lang == "ru")?" Боев на советах:" : "Battles on USSR:", ussr_w);
 	proc_country (nazi_b, (lang == "ru")?" Боев на немцах:": "Battles on Germany:", nazi_w);
-	proc_country (usa_b, (lang == "ru")?" Боев на амерах:" :"Battles on USA:", usa_w);
+	proc_country (usa_b,  (lang == "ru")?" Боев на амерах:" :"Battles on USA:", usa_w);
 	proc_country (chin_b, (lang == "ru")?" Боев на китайцах:" :"Battles on China:", chin_w);
-	proc_country (fr_b, (lang == "ru")?" Боев на французах:" :"Battles on France:", fr_w);
-	proc_country (uk_b, (lang == "ru")?" Боев на бритах:" :"Battles on UK:", uk_w);
+	proc_country (fr_b,   (lang == "ru")?" Боев на французах:" :"Battles on France:", fr_w);
+	proc_country (uk_b,   (lang == "ru")?" Боев на бритах:" :"Battles on UK:", uk_w);
 	
 	if(daypassed!=0)insertNewTr(NatParent,(lang == "ru")?" Боев в день:" :"Battles per day:", ""+(all_b/daypassed).toFixed(0)+"" , ((lang == "ru")?"дней" : "days")+": "+daypassed.toFixed() );
 
@@ -687,17 +699,17 @@ function main(lang)
 	{
 		key = levOrder[i];
 		if(lev[key]!=undefined)
+		{
+			ml += (10-i)*lev[key].b/all_b;
+			levTr = insertTank(trTankTable,key, lev[key].b, lev[key].w, "lev" ,(lev[key].b/all_b*100).toFixed(2)+"%");
+			for (var j = 1; j < 6; j++)
 			{
-				ml += (10-i)*lev[key].b/all_b;
-				levTr = insertTank(trTankTable,key, lev[key].b, lev[key].w, "lev" ,(lev[key].b/all_b*100).toFixed(2)+"%");
-				for (var j = 1; j < 6; j++)
-					{
-						b = lev[key].t[j].b;
-						w = lev[key].t[j].w;
-						if (b == 0) addTd(levTr,"x","right");
-						else addTd(levTr,""+col(w/b*100,2)+"%","right value",""+w+"/"+b);
-					}
+				b = lev[key].t[j].b;
+				w = lev[key].t[j].w;
+				if (b == 0) addTd(levTr,"x","right");
+				else addTd(levTr,""+col(w/b*100,2)+"%","right value",""+w+"/"+b);
 			}
+		}
 	}
 	var eff = damag*(10/ml)*(0.15+2*ml/100)+frags*(0.35-2*ml/100)*1000 + spotted*0.2*1000 + caps*0.15*1000+defs*0.15*1000; 
 	insertNewTr(NewtrParent,(lang == "ru") ?" Эффективность:" : "Efficiency rating:", (eff/all_b).toFixed(2), "");
@@ -705,7 +717,7 @@ function main(lang)
 	trType = insertNewTr(trTankTable,(lang == "ru")?" <u>Бои по типу</u>":"<u>battles by type:</u>",(lang == "ru")?"Бои":"Battles","");
 	addTd(trType,(lang == "ru")?"Победы":"Victories","right");
 	addTd(trType,"%","right");
-	for(var j = 1;j<NatCount;j++)
+	for (var j = 1; j < NatCount; j++)
 	{
 		addTd(trType, toNat(j),"right");
 	}
@@ -760,7 +772,7 @@ function main(lang)
 		tr.appendChild(tdNew);
 	}
 
-	function insertNewTr(NewTrParent,text,val, title)
+	function insertNewTr(NewTrParent, text, val, title)
 	{
 		var trNew = document.createElement('tr');
 		var tdNewName = document.createElement('td');
@@ -775,7 +787,7 @@ function main(lang)
 		return trNew;
 	}
 
-	function insertTank(NewTrParent,level,battle,win, name, title)
+	function insertTank(NewTrParent, level, battle, win, name, title)
 	{
 		var trNew = document.createElement('tr');
 		var tdNewLevel = document.createElement('td');
@@ -845,7 +857,15 @@ function main(lang)
 	
 	function proc_country (country_b, fights_on_text, country_w) // выводит процент боев на технике разных стран, klensy
 	{
-		if(country_b!=0)insertNewTr(NatParent, fights_on_text, ""+country_b+" ("+(country_b/all_b*100).toFixed(0)+"%/"+col(country_w/country_b*100,0)+"%)", (lang == "ru")?"Процент боев/Процент побед" : "battle procent/win procent");
+		if (country_b != 0) insertNewTr(NatParent, fights_on_text, "" + country_b + " (" + (country_b / all_b * 100).toFixed(0) + "%/" + col(country_w / country_b * 100, 0) + "%)", (lang == "ru") ? "Процент боев/Процент побед" : "battle procent/win procent");
+	}
+	
+	function setup_script (script_name) // просто заменил копипасту на вызов функции, klensy
+	{
+		var script = document.createElement("script");  
+		script.type = "text/javascript";		
+		script.textContent =  script_name.toString();
+		document.body.appendChild(script);
 	}
 }//////////////////////////main
 //----------
@@ -864,13 +884,13 @@ function sortTd(el,dir)
 	th = rows[0];
 	sortar = [];
 	
-	for (var i=1; i<rows.length ;i++)
+	for (var i = 1; i < rows.length; i++)
 	{
 		sortar[i] = [];
 		sortar[i][0] = defkey(rows[i],Index);
 		sortar[i][1] = rows[i];
 	}
-	if (el.onclick.toString().indexOf('"u"')>0) 
+	if (el.onclick.toString().indexOf('"u"') > 0)
 	{
 		sortar.sort(_sort);
 		el.setAttribute('onclick','sortTd(this, "d")');
@@ -887,29 +907,29 @@ function sortTd(el,dir)
     	tBody.appendChild(sortar[i][1]);
     }
 
-function defkey(row,i)
-{
-	var levOrder = ["X","IX","VIII","VII","VI","V","IV","III","II","I"];
-	if (i >= 7) return parseFloat(row.cells[i].innerHTML.replace(/\D/g,"")) ; 
-	if (i >= 5) return parseFloat(row.cells[i].innerHTML.match(/>(.*)</)[1]) ; 
-	if (i >= 3) return parseFloat(row.cells[i].innerHTML.replace(/\D/g,"")) ; 
-	if (i == 1) return levOrder.indexOf( row.cells[i].getElementsByTagName("span")[0].innerHTML.replace(/<[^<]*>/g,"").replace(/\s/,"") );
-	return row.cells[i].innerHTML;
-}
+	function defkey(row,i)
+	{
+		var levOrder = ["X","IX","VIII","VII","VI","V","IV","III","II","I"];
+		if (i >= 7) return parseFloat(row.cells[i].innerHTML.replace(/\D/g,"")) ; 
+		if (i >= 5) return parseFloat(row.cells[i].innerHTML.match(/>(.*)</)[1]) ; 
+		if (i >= 3) return parseFloat(row.cells[i].innerHTML.replace(/\D/g,"")) ; 
+		if (i == 1) return levOrder.indexOf( row.cells[i].getElementsByTagName("span")[0].innerHTML.replace(/<[^<]*>/g,"").replace(/\s/,"") );
+		return row.cells[i].innerHTML;
+	}
 
-function _sort(a,b)
-{
-	a = a[0];
-	b = b[0];
-	return (a > b) ? -1 : 1;
-}
+	function _sort(a,b)
+	{
+		a = a[0];
+		b = b[0];
+		return (a > b) ? -1 : 1;
+	}
 
-function _sortR(a,b)
-{
-	a = a[0];
-	b = b[0];
-	return (a > b) ? 1 : -1;
-}
+	function _sortR(a,b)
+	{
+		a = a[0];
+		b = b[0];
+		return (a > b) ? 1 : -1;
+	}
 
 }////sortTd
 //----------
