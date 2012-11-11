@@ -185,53 +185,13 @@ function main(lang)
 	//	document.getElementsByClassName("l-sidebar")[0].style = "width: 144px;";
 
 
-	   /*var script = document.createElement("script");  //
-	   script.type = "text/javascript";		
-	   script.textContent =  sortTd.toString();
-	   document.body.appendChild(script);*/
 	   setup_script (sortTd);
-
-	   /*var script = document.createElement("script");  
-	   script.type = "text/javascript";		
-	   script.textContent =  toType.toString();
-	   document.body.appendChild(script);*/
 	   setup_script (toType);
-
-
-	   /*var script = document.createElement("script");  
-	   script.type = "text/javascript";		
-	   script.textContent =  WriteStat.toString();
-	   document.body.appendChild(script);*/
 	   setup_script (WriteStat);
-
-	   /*var script = document.createElement("script");  
-	   script.type = "text/javascript";		
-	   script.textContent =  hideTypes.toString();
-	   document.body.appendChild(script);*/
-	   setup_script (hideTypes);
-	
-	   /*var script = document.createElement("script");  
-	   script.type = "text/javascript";		
-	   script.textContent =  toFl.toString();
-	   document.body.appendChild(script);*/
+	   setup_script (hideTypes);	
 	   setup_script (toFl);
-
-	   /*var script = document.createElement("script");  
-	   script.type = "text/javascript";		
-	   script.textContent =  col.toString();
-	   document.body.appendChild(script);*/
 	   setup_script (col);
-
-	   /*var script = document.createElement("script");  
-	   script.type = "text/javascript";		
-	   script.textContent =  col2.toString();
-	   document.body.appendChild(script);*/
 	   setup_script (col2);
-
-	   /*var script = document.createElement("script");  
-	   script.type = "text/javascript";		
-	   script.textContent =  setCookie.toString();
-	   document.body.appendChild(script);*/
 	   setup_script (setCookie);
 							  
 	  var needMedal = getCookie("medal");
@@ -253,7 +213,7 @@ function main(lang)
 		req = new XMLHttpRequest();
 		req.onreadystatechange = function(e) 
 		{
-			if (req.readyState == 4)if(req.status == 200)
+			if (req.readyState == 4)if(req.status == 200) //200
 			{
 				eval("var resp ="+ req.responseText);
 				arMedal = resp.data.achievements;//gbody.match(/"achievements": \{([^\}]*)\}/g)[0].split("{")[1].split(",")
@@ -305,14 +265,19 @@ function main(lang)
 					div.innerHTML += "<div><a href='http://worldoftanks.ru/game/guide/ru/general/achievements'>Описание достижений</a></div>"
 				else
 					div.innerHTML += "<div><a href='http://worldoftanks.com/game/guide/en/general/achievements'>Achievements description</a></div>"
-
+				
 				var rows = document.getElementsByClassName("t-statistic")[1].rows; 
 
 				nc = rows[0].insertCell(rows[0].cells.length);
 				nc.className ="right";
-				nc.innerHTML = '<div onclick="sortTd(this, &quot;u&quot;)" style="cursor: pointer">damag</div>';
+				
+				nc.innerHTML = '<div onclick="sortTd(this, &quot;u&quot;)" style="cursor: pointer">damage</div>';
 				nc = rows[0].insertCell(rows[0].cells.length);
 				nc.innerHTML = '<div onclick="sortTd(this, &quot;u&quot;)" style="cursor: pointer">frags</div>';
+				
+				nc = rows[0].insertCell(rows[0].cells.length); // spotted table, klensy
+				nc.innerHTML = '<div onclick="sortTd(this, &quot;u&quot;)" style="cursor: pointer">spotted</div>';
+				
 
 				vehs = resp.data.vehicles;
 				for (var i = 1; i < rows.length; i++)
@@ -325,7 +290,7 @@ function main(lang)
 						{
 							if(vehs[j].name.toLowerCase() == imgName)
 							{
-								veh= vehs[j];
+								veh = vehs[j];
 								break;
 							}	
 						}
@@ -335,17 +300,21 @@ function main(lang)
 						ncell = rows[i].insertCell(t.length);
 						ncell.innerHTML = ""+(veh.frags/veh.battle_count).toFixed(2)+"";
 						ncell.title = veh.battle_count;
+						
+						ncell = rows[i].insertCell(t.length); // added avg_spotted, klensy
+						ncell.innerHTML = ""+(veh.spotted/veh.battle_count).toFixed(2)+"";
 					}
 				}
 			}
 		};                                                                               
 		req.open("GET", url, true);
+		//req.open("GET","http://anonymouse.org/cgi-bin/anon-www.cgi/"+url, true);
 		req.setRequestHeader("If-Modified-Since", "Sat, 1 Jan 2000 00:00:00 GMT");
+		//req.setRequestHeader("Referer", "anonymouse.org");
 		try 
 		{
 			if (needMedal == 1) req.send(null);
 		} catch (e){}
-
 
 	var atype = [];
 	//atype[1] = [];
@@ -369,10 +338,28 @@ function main(lang)
 
 	//http://dl.dropbox.com/u/2984537/wot/stats/json
 
-	var tankS = // ? panther_m10, pziv_schmalturm, su100m1, su-101, su122_54, object263, su122_44
-	["ch01_type59", "_105_lefh18b2", "amx_105am", "amx_12t", "amx_13_75", "amx_13_90", "amx_13f3am", "amx38", "amx40", "amx_50_100", "amx_50_120", "amx50_foch", "f10_amx_50b", "amx_ac_mle1946", "amx_ac_mle1948", "amx_m4_1945", "amx_50fosh_155", "arl_44", "arl_v39", "b1", "bat_chatillon155", "bat_chatillon25t", "bdr_g1b", "d1", "d2", "elc_amx", "fcm_36pak40", "hotchkiss_h35", "lorraine40t", "lorraine155_50", "lorraine155_51", "lorraine39_l_am", "renaultue57", "renaultbs", "renaultft", "renaultft_ac", "s_35ca", "somua_sau_40", "jagdtiger_sdkfz_185", "dickermax", "e-100", "e-50", "e-75", "e50_ausf_m", "ferdinand", "grille", "g_panther", "g_tiger", "g_e", "hetzer", "hummel", "jagdpanther", "jagdpantherii", "jagdpz_e100", "jagdpziv", "jagdtiger", "ltraktor", "lowe", "g20_marder_ii", "maus", "panther_ii", "panzerjager_i", "pz35t", "pz38t", "pz38_na", "h39_captured", "b-1bis_captured", "pzii", "pzii_luchs", "pziii", "pziii_a", "pziii_iv", "pziv", "s35_captured", "pzv", "pzv_pziv", "pzv_pziv_ausf_alfa", "pzvi", "pzvi_tiger_p", "pzvib_tiger_ii", "stugiii", "bison_i", "sturmpanzer_ii", "t-15", "t-25", "vk1602", "vk2801", "vk3001h", "vk3001p", "vk3002db", "vk3601h", "vk4502a", "vk4502p", "wespe", "gb68_matilda_black_prince", "m10_wolverine", "m103", "m12", "m18_hellcat", "m2_lt", "m2_med", "m22_locust", "m24_chaffee", "pershing", "m3_grant", "m3_stuart", "m36_slagger", "m37", "m4_sherman", "m40m43", "m41", "m46_patton", "m48a1", "m4a2e4", "sherman_jumbo", "m4a3e8_sherman", "m5_stuart", "m6", "m6a2e1", "m7_med", "m7_priest", "m8a1", "ram-ii", "t14", "t1_cunningham", "t1_hvy", "t110e3", "t110e4", "t110", "t18", "t2_lt", "t2_med", "t20", "t23", "t25_at", "t25_2", "t26_e4_superpershing", "t28", "t28_prototype", "t29", "t30", "t32", "t34_hvy", "t40", "t49", "t57", "t82", "t92", "t95", "churchill_ll", "m3_stuart_ll", "matilda_ii_ll", "tetrarch_ll", "t-34", "t62a", "valentine_ll", "a-20", "a-32", "at-1", "bt-2", "bt-7", "is", "is-3", "is-4", "object252", "is-7", "is8", "isu-152", "kv", "kv1", "kv-13", "kv-1s", "kv2", "kv-220", "kv-220_action", "kv-3", "kv-5", "kv4", "ms-1", "object_212", "object_261", "object268", "object_704", "s-51", "st_i", "su-100", "su-14", "su-152", "su-18", "su-26", "su-5", "su-76", "su-8", "su-85", "gaz-74b", "t-127", "t150", "t-26", "t-28", "t-34-85", "t-43", "t-44", "t-46", "t-50", "t_50_2", "t-54"];
+	var tankS =
+	["vk1602", "pz38_na", "h39_captured", "pz35t", "pzii", "pziii_a", "pzii_luchs", "pz38t", "t-15", "pzii_j", "vk2801", "ltraktor",
+	"m5_stuart", "t2_lt", "m2_lt", "m24_chaffee", "m3_stuart", "m22_locust", "t1_cunningham", // T1E6, MTLS-1G14 miss
+	"t-50", "a-20", "valentine_ll", "t_50_2", "t-46", "bt-7", "t-127", "m3_stuart_ll", "bt-sv", "ms-1", "t-26", "bt-2", "tetrarch_ll",
+	"amx_13_75", "amx40", "amx_12t", "amx38", "renaultft", "hotchkiss_h35", "d1", "amx_13_90", "elc_amx",
+	"ch02_type62",
+	"gb58_cruiser_mk_iii", "gb03_cruiser_mk_i", "gb59_cruiser_mk_iv", "gb69_cruiser_mk_ii", "gb60_covenanter", "gb04_valentine", "gb20_crusader",
+	"ferdinand", "jagdtiger_sdkfz_185", "jagdpantherii", "jagdpanther", "jagdtiger", "jagdpziv", "dickermax", "stugiii", "hetzer", "g20_marder_ii", "panzerjager_i", "jagdpz_e100",
+	"t28", "t28_prototype", "m36_slagger", "m18_hellcat", "t25_at", "t25_2", "m10_wolverine", "t49", "t95", "t30", "t40", "m8a1", "t82", "t18", "t110e3", "t110e4",
+	"isu-152", "su-101", "object_704", "su122_54", "su-152", "su100m1", "su122_44", "su-85", "su_85i", "su-100", "gaz-74b", "su-76", "at-1", "object268", "object263"
+	];
 
-	var medP = [52.13, 50.49, 50.44, 49.36, 51.14, 51.83, 52.62, 49.39, 48.61, 51.88, 51.76, 56.59, 50.97, 54.22, 54.15, 48.56, 54.83, 48.79, 50.95, 45.27, 54.53, 52.8, 47.03, 46.47, 49.29, 50.17, 56.06, 48.21, 53.33, 54.18, 54.17, 49.88, 50.46, 49.28, 48.51, 49.6, 52.71, 49.56, 49.35, 52.63, 49.26, 50.66, 49.47, 52.39, 50.89, 49.53, 49.96, 48.43, 49.46, 48.77, 49.42, 51.5, 51.65, 48.74, 49.43, 50.09, 49.08, 47.75, 53.46, 51.09, 51.79, 50.71, 48.72, 49.03, 48.43, 55.4, 53.03, 48.67, 49.71, 48.64, 48.39, 47.78, 49.49, 56.14, 51.36, 50.15, 51.32, 46.84, 49.18, 48.08, 49.19, 48.1, 48.01, 53.56, 50.61, 50.84, 52.14, 50.1, 48.93, 50.3, 50.88, 48.96, 47.38, 47.67, 0, 49.93, 47.7, 49.46, 51.39, 50.04, 48.98, 54.19, 54, 53.11, 47.95, 49.48, 50.86, 47.49, 50.05, 50.6, 49.71, 52.26, 55.98, 48.65, 51.58, 50.33, 49.18, 46.77, 48.51, 47.35, 47.72, 49.83, 51.68, 45.83, 48.62, 46.79, 52.3, 55.28, 52.34, 51.39, 54.48, 47.44, 51.93, 0, 52.17, 50.72, 50.05, 49.2, 49.03, 49.61, 51.65, 50.09, 49.7, 50.63, 49.71, 49.66, 50.85, 48.74, 49.67, 47.23, 47.54, 50.07, 52.01, 47.77, 50.87, 52.36, 47.07, 55.2, 50.18, 48.47, 47.15, 46.97, 47.72, 47.64, 46.79, 49.22, 48.07, 49.2, 0, 48.82, 48.96, 46.93, 48.41, 48.23, 53.68, 47.21, 46.92, 46.22, 49.65, 49.51, 48.9, 51.08, 51.06, 48.55, 45.37, 50.45, 48.57, 50.53, 47.16, 49.94, 48.5, 49.09, 49.29, 49.85, 49.14, 55.63, 47.15, 47.66, 48.11, 49.06, 49.56, 50.19, 48.16, 50.74, 52.94, 49.59];
+	var medP = [50.41, 49.93, 59.65, 48.98, 48.86, 50.28, 51.73, 50.56, 56.01, 100, 51.36, 48.1,
+	49.45, 53.44, 48.85, 52.23, 48.6, 54.83, 48.08,
+	49.3, 47.36, 48.57, 50.2, 47.65, 47.61, 53.61, 46.73, 100, 47.88, 47.71, 48.0, 50.38,
+	49.67, 50.91, 49.58, 52.14, 47.71, 50.25, 49.2, 50.67, 50.39,
+	52.09,
+	48.77, 48.8, 49.14, 49.51, 49.05, 51.01, 50.03,
+	50.89, 49.55, 51.66, 51.41, 50.22, 49.42, 51.03, 49.32, 49.07, 53.25, 50.55, 48.38,
+	49.37, 49.67, 50.7, 51.13, 51.75, 50.23, 50.11, 49.76, 50.01, 51.39, 50.67, 49.93, 50.0, 51.11, 50.96, 52.59,
+	49.03, 47.6, 50.94, 49.7, 50.15, 50.02, 50.22, 49.64, 57.14, 50.27, 49.03, 48.66, 49.7, 50.31, 49.96
+	];
 	var unrealDate = " - 02.08.12 (special thanks to fbmk)"
 
 	var levOrder = ["X","IX","VIII","VII","VI","V","IV","III","II","I"];
