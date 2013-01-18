@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @author klensy
 // @name WoTStats_test
-// @version 0.8.2
+// @version 0.8.3
 // @description Adds some usable fields for MMO game World of Tanks user's page 
 // @match http://challenge.worldoftanks.ru/uc/accounts/*
 // @match http://worldoftanks.com/uc/accounts/*
@@ -33,7 +33,7 @@ function main(lang)
 		var timeDiv = document.getElementsByClassName("b-data-date")[0];
 		var timeStamp = new Date(Number(timeDiv.childNodes[1].getAttribute("data-timestamp")) * 1000);
 		timeDiv.innerHTML += "<p/>" + (lang == "ru" ? "версия <a href='http://forum.worldoftanks.ru/index.php?/topic/566557-'>скрипта</a> " : " <a href='http://forum.worldoftanks.ru/index.php?/topic/566557-'>script</a> version ")
-		+ "0.8.2 <p/> <font onclick='WriteStat();' style='cursor:pointer; color:white; text-decoration:underline'>" + ((lang == "ru") ? "Сохранить текущую стату" : "Save statistic") + "</font>";
+		+ "0.8.3 <p/> <font onclick='WriteStat();' style='cursor:pointer; color:white; text-decoration:underline'>" + ((lang == "ru") ? "Сохранить текущую стату" : "Save statistic") + "</font>";
 
 		var dayArray = [];
 		var old_b =0;
@@ -318,14 +318,14 @@ function main(lang)
 
 	var atype = [];
 	//atype[1] = [];
-	atype[1] = //'lt', 0.8.2, deleted a-32 from lt to mt, added t21, t71
-	['t2_lt', 'tetrarch_ll', 'renaultft', 'd1', 'hotchkiss_h35', 'amx38', 'amx40', 'elc_amx', 'amx_12t', 'amx_13_75', 'amx_13_90', 'm22_locust', 'pzii_j', 'm24_chaffee', 't-50', 't_50_2', 'vk2801', 't-15', 'ms-1', 'ltraktor', 't1_cunningham', 't-26', 'bt-2', 'pzii', 'pz35t', 'm2_lt', 't-46', 'bt-7', 'pziii_a', 'pzii_luchs', 'pz38t', 'm3_stuart', 'a-20', 'vk1602', 'pz38_na', 'm5_stuart', 'm3_stuart_ll', 'ch02_type62', 'bt-sv', 't-127', 'valentine_ll', 'h39_captured', 'gb03_cruiser_mk_i', 'gb58_cruiser_mk_iii', 'gb69_cruiser_mk_ii', 'gb59_cruiser_mk_iv', 'gb04_valentine', 'gb60_covenanter', 'gb20_crusader', 't21', 't71']
+	atype[1] = //'lt', 0.8.3,  added china tanks
+	['t2_lt', 'tetrarch_ll', 'renaultft', 'd1', 'hotchkiss_h35', 'amx38', 'amx40', 'elc_amx', 'amx_12t', 'amx_13_75', 'amx_13_90', 'm22_locust', 'pzii_j', 'm24_chaffee', 't-50', 't_50_2', 'vk2801', 't-15', 'ms-1', 'ltraktor', 't1_cunningham', 't-26', 'bt-2', 'pzii', 'pz35t', 'm2_lt', 't-46', 'bt-7', 'pziii_a', 'pzii_luchs', 'pz38t', 'm3_stuart', 'a-20', 'vk1602', 'pz38_na', 'm5_stuart', 'm3_stuart_ll', 'ch02_type62', 'bt-sv', 't-127', 'valentine_ll', 'h39_captured', 'gb03_cruiser_mk_i', 'gb58_cruiser_mk_iii', 'gb69_cruiser_mk_ii', 'gb59_cruiser_mk_iv', 'gb04_valentine', 'gb60_covenanter', 'gb20_crusader', 't21', 't71', 't1_e6', 'ch06_renault_nc31', 'ch07_vickers_mke_type_bt26', 'ch08_type97_chi_ha', 'ch09_m5', 'ch15_59_16', 'ch16_wz_131', 'ch17_wz131_1_wz132']
 
-	atype[2] = //'mt', 0.8.2, deleted a-32 from lt to mt, added t69
-	['t-25', 'd2', 'bat_chatillon25t', 'lorraine40t', 'sherman_jumbo', 'ch01_type59', 's35_captured', 'pzv_pziv', 'pzv_pziv_ausf_alfa', 'mtls-1g14', 'm4a2e4', 'ram-ii', 'matilda_ii_ll', 'gb68_matilda_black_prince', 't2_med', 'm2_med', 't-28', 'pziii', 'm3_grant', 't-34', 'pziv', 'pziii_iv', 'm4_sherman', 'm7_med', 't-34-85', 'vk3601h', 'vk3001h', 'vk3001p', 'm4a3e8_sherman', 'pziv_schmalturm', 'panther_m10', 't26_e4_superpershing', 't-43', 'kv-13', 'vk3002db', 'pzv', 't20', 't-44', 'panther_ii', 't23', 'pershing', 'm48a1', 't-54', 't62a', 'e-50', 'e50_ausf_m', 'pziv_hydro', 't23', 'm46_patton', 'gb01_medium_mark_i', 'gb05_vickers_medium_mk_ii', 'gb06_vickers_medium_mk_iii', 'gb07_matilda', 'gb68_matilda_black_prince', 'gb21_cromwell', 'gb22_comet', 'gb23_centurion', 'gb24_centurion_mk3', 'a-32', 't69', 't54e1']
+	atype[2] = //'mt', 0.8.3, added china tanks, fixed gb70_fv4202_105 mt
+	['t-25', 'd2', 'bat_chatillon25t', 'lorraine40t', 'sherman_jumbo', 'ch01_type59', 's35_captured', 'pzv_pziv', 'pzv_pziv_ausf_alfa', 'mtls-1g14', 'm4a2e4', 'ram-ii', 'matilda_ii_ll', 'gb68_matilda_black_prince', 't2_med', 'm2_med', 't-28', 'pziii', 'm3_grant', 't-34', 'pziv', 'pziii_iv', 'm4_sherman', 'm7_med', 't-34-85', 'vk3601h', 'vk3001h', 'vk3001p', 'm4a3e8_sherman', 'pziv_schmalturm', 'panther_m10', 't26_e4_superpershing', 't-43', 'kv-13', 'vk3002db', 'pzv', 't20', 't-44', 'panther_ii', 't23', 'pershing', 'm48a1', 't-54', 't62a', 'e-50', 'e50_ausf_m', 'pziv_hydro', 't23', 'm46_patton', 'gb01_medium_mark_i', 'gb05_vickers_medium_mk_ii', 'gb06_vickers_medium_mk_iii', 'gb07_matilda', 'gb68_matilda_black_prince', 'gb21_cromwell', 'gb22_comet', 'gb23_centurion', 'gb24_centurion_mk3', 'a-32', 't69', 't54e1', 'ch21_t34', 'ch20_type58', 'ch04_t34_1', 'ch05_t34_2', 'ch18_wz-120', 'ch19_121', 'gb70_fv4202_105']
 
-	atype[3] = //'ht', 0.8.2 added t57_58
-	['b1', 'bdr_g1b', 'arl_44', 'amx_m4_1945', 'amx_50_100', 'amx_50_120', 'f10_amx_50b', 'lowe', 'kv-220_action', 'kv-220', 'kv-5', 'b-1bis_captured', 'churchill_ll', 't14', 'm6a2e1', 'kv', 'kv1', 'kv2', 'kv4', 'is8', 'object252', 'st_i', 't150', 't1_hvy', 'kv-3', 'kv-1s', 'm6', 'is', 'pzvi', 'pzvi_tiger_p', 't29', 'is-3', 'pzvib_tiger_ii', 'vk4502a', 't32', 'is-4', 'vk4502p', 'e-75', 't34_hvy', 'm103', 't110', 'is-7', 'maus', 'e-100', 'gb08_churchill_i', 'gb09_churchill_vii', 'gb10_black_prince', 'gb11_caernarvon', 'gb12_conqueror', 'gb13_fv215b', 't57_58']
+	atype[3] = //'ht', 0.8.3, added china tanks
+	['b1', 'bdr_g1b', 'arl_44', 'amx_m4_1945', 'amx_50_100', 'amx_50_120', 'f10_amx_50b', 'lowe', 'kv-220_action', 'kv-220', 'kv-5', 'b-1bis_captured', 'churchill_ll', 't14', 'm6a2e1', 'kv', 'kv1', 'kv2', 'kv4', 'is8', 'object252', 'st_i', 't150', 't1_hvy', 'kv-3', 'kv-1s', 'm6', 'is', 'pzvi', 'pzvi_tiger_p', 't29', 'is-3', 'pzvib_tiger_ii', 'vk4502a', 't32', 'is-4', 'vk4502p', 'e-75', 't34_hvy', 'm103', 't110', 'is-7', 'maus', 'e-100', 'gb08_churchill_i', 'gb09_churchill_vii', 'gb10_black_prince', 'gb11_caernarvon', 'gb12_conqueror', 'gb13_fv215b', 't57_58', 'gb63_tog_ii', 'ch10_is2', 'ch11_110', 'ch12_111_1_2_3', 'ch22_113']
 
 	atype[4] = //'sp',
 	['su-18', 'bison_i', 't57', '_105_lefh18b2', 'su-26', 'wespe', 'sturmpanzer_ii', 'm37', 'su-5', 'grille', 'm7_priest', 'su-8', 'hummel', 'm41', 'su-14', 's-51', 'g_panther', 'm12', 'object_212', 'g_tiger', 'm40m43', 'object_261', 'g_e', 'renaultbs', 'lorraine39_l_am', 'amx_105am', 'amx_13f3am', 'bat_chatillon155', 'lorraine155_50', 'lorraine155_51', 't92']
@@ -334,7 +334,7 @@ function main(lang)
 	['at-1', 'panzerjager_i', 't18', 'su-76', 'g20_marder_ii', 't82', 'fcm_36pak40', 'm8a1', 't49', 'gaz-74b', 'hetzer', 't40', 'su-85', 'su_85i', 'stugiii', 'm10_wolverine', 'su-100', 'su-101', 'su100m1', 'su122_54', 'object263', 'su122_44', 'jagdpziv', 'm36_slagger', 'm18_hellcat', 'su-152', 'jagdpanther', 'jagdpantherii', 't25_at', 't25_2', 'isu-152', 'ferdinand', 't28', 't28_prototype', 'object_704', 'object268', 'jagdtiger', 'jagdtiger_sdkfz_185', 't95', 'dickermax', 'jagdpz_e100', 't110e4', 't110e3', 'amx_50fosh_155', 'renaultft_ac', 'renaultue57', 'somua_sau_40', 's_35ca', 'arl_v39', 'amx_ac_mle1946', 'amx_ac_mle1948', 'amx50_foch', 't30', 'gb71_at_15a', 'su100y']
 
 	prem = // 0.8.2 added su100y
-	['tetrarch_ll', 'm3_stuart_ll', 'bt-sv', 't-127', 'valentine_ll', 'a-32', 'churchill_ll', 'matilda_ii_ll', 'gb68_matilda_black_prince', 'kv-220_action', 'kv-220', 'kv-5', 'object252', 't26_e4_superpershing', 'jagdtiger_sdkfz_185', 't34_hvy', 'h39_captured', 'pzii_j', 's35_captured', 't-15', 'b-1bis_captured', 't-25', 'pzv_pziv', 'pzv_pziv_ausf_alfa', 'lowe', 't2_lt', 'mtls-1g14', 'm22_locust', 'm4a2e4', 'ram-ii', 't14', 'm6a2e1', 'su_85i', 'pziv_hydro', '_105_lefh18b2', 'fcm_36pak40', 'dickermax', 'ch02_type62', 'ch01_type59', 'su122_44', 'panther_m10', 'pziv_schmalturm', 'gb63_tog_ii', 'gb71_at_15a', 'fcm_50t', 'su100y']
+	['tetrarch_ll', 'm3_stuart_ll', 'bt-sv', 't-127', 'valentine_ll', 'a-32', 'churchill_ll', 'matilda_ii_ll', 'gb68_matilda_black_prince', 'kv-220_action', 'kv-220', 'kv-5', 'object252', 't26_e4_superpershing', 'jagdtiger_sdkfz_185', 't34_hvy', 'h39_captured', 'pzii_j', 's35_captured', 't-15', 'b-1bis_captured', 't-25', 'pzv_pziv', 'pzv_pziv_ausf_alfa', 'lowe', 't2_lt', 'mtls-1g14', 'm22_locust', 'm4a2e4', 'ram-ii', 't14', 'm6a2e1', 'su_85i', 'pziv_hydro', '_105_lefh18b2', 'fcm_36pak40', 'dickermax', 'ch02_type62', 'ch01_type59', 'su122_44', 'panther_m10', 'pziv_schmalturm', 'gb63_tog_ii', 'gb71_at_15a', 'fcm_50t', 'su100y', 't1_e6']
 
 	//http://dl.dropbox.com/u/2984537/wot/stats/json
 	
