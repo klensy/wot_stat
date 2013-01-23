@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @author klensy
 // @name WoTStats_test
-// @version 0.8.3.1
+// @version 0.8.3.2
 // @description Adds some usable fields for MMO game World of Tanks user's page 
 // @match http://challenge.worldoftanks.ru/uc/accounts/*
 // @match http://worldoftanks.com/uc/accounts/*
@@ -33,7 +33,7 @@ function main(lang)
 		var timeDiv = document.getElementsByClassName("b-data-date")[0];
 		var timeStamp = new Date(Number(timeDiv.childNodes[1].getAttribute("data-timestamp")) * 1000);
 		timeDiv.innerHTML += "<p/>" + (lang == "ru" ? "версия <a href='http://forum.worldoftanks.ru/index.php?/topic/566557-'>скрипта</a> " : " <a href='http://forum.worldoftanks.ru/index.php?/topic/566557-'>script</a> version ")
-		+ "0.8.3.1 <p/> <font onclick='WriteStat();' style='cursor:pointer; color:white; text-decoration:underline'>" + ((lang == "ru") ? "Сохранить текущую стату" : "Save statistic") + "</font>";
+		+ "0.8.3.2 <p/> <font onclick='WriteStat();' style='cursor:pointer; color:white; text-decoration:underline'>" + ((lang == "ru") ? "Сохранить текущую стату" : "Save statistic") + "</font>";
 
 		var dayArray = [];
 		var old_b =0;
@@ -681,7 +681,35 @@ function main(lang)
 	}
 	var eff = damag*(10/ml)*(0.15+2*ml/100)+frags*(0.35-2*ml/100)*1000 + spotted*0.2*1000 + caps*0.15*1000+defs*0.15*1000; 
 	insertNewTr(NewtrParent,(lang == "ru") ?" Эффективность:" : "Efficiency rating:", (eff/all_b).toFixed(2), "");
-	 
+	
+	//эффективность по бронесайту (http://armor.kiev.ua), спасибо bvrus
+	var resText = rows[11].cells[3].innerHTML;
+    resText = resText.indexOf("span") > 0 ? resText.substr(0,resText.indexOf("span")) : resText;
+    summaryxp = toFl(resText);
+  
+    var resText = rows[4].cells[3].innerHTML;
+    resText = resText.indexOf("span") > 0 ? resText.substr(0,resText.indexOf("span")) : resText;
+    wins = toFl(resText);
+        
+    var resText = rows[5].cells[3].innerHTML;
+    resText = resText.indexOf("span") > 0 ? resText.substr(0,resText.indexOf("span")) : resText;
+    battles = toFl(resText);
+        
+    var effbs =
+                Math.log(battles) / 10  * (
+                    summaryxp / battles * 1  +
+                    damag / battles  * (
+                    wins / battles * 2.0 +
+                    frags / battles * 0.9 +
+                    spotted / battles * 0.5 +
+                    caps / battles * 0.5 +
+                    defs / battles * 0.5   
+                            )
+                    ) ;
+
+    insertNewTr(NewtrParent,(lang == "ru") ?" Эффективность БС:" : "Efficiency rating of BS:",(effbs).toFixed(2), "");
+	//
+	
 	trType = insertNewTr(trTankTable,(lang == "ru")?" <u>Бои по типу</u>":"<u>battles by type:</u>",(lang == "ru")?"Бои":"Battles","");
 	addTd(trType,(lang == "ru")?"Победы":"Victories","right");
 	addTd(trType,"%","right");
